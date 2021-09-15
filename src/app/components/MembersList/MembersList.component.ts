@@ -3,6 +3,7 @@ import { Member } from 'src/app/models/member';
 import { constants } from '../../constants';
 import { filterDevsAndQA, getMembers, MembersService } from '../../services/members.service';
 import { getMembersIdsAndDaysOffMap, getSprintEndDate, getTimeOff, TimeOffService } from '../../services/timeoff.service';
+import {isDev, isQA} from '../../utils';
 
 @Component({
   selector: 'members-list',
@@ -18,8 +19,9 @@ export class MembersListComponent implements OnChanges {
 
   allDevsAndQA: []
   membersWithTimeOff: Member[]
+  departments: string[]
 
-  developersShown: boolean = true
+  developersShown: boolean = false
   qasShown: boolean = false
 
   constructor(
@@ -30,6 +32,7 @@ export class MembersListComponent implements OnChanges {
   ngOnInit(): void {
     // the next line should be removed, just for mocking
     this.allDevsAndQA = getMembers()
+    this.departments = ['All', 'Development', 'QA']
 
     // the next 2 lines should be removed as well
     const devsAndQAWithDaysOffMap = getTimeOff('2021-09-08', 20)
@@ -64,13 +67,13 @@ export class MembersListComponent implements OnChanges {
         (timeoff) => {
           const devsAndQAWithDaysOffMap = getMembersIdsAndDaysOffMap(timeoff)
 
-          this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)          
+          this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)
         },
         error => {
           console.log(error)
         },
         () => {
-  
+
         }
       )
     }
@@ -100,5 +103,17 @@ export class MembersListComponent implements OnChanges {
 
   memberRemoved(memberId): void {
     this.membersWithTimeOff = this.membersWithTimeOff.filter(x => x.id !== memberId)
+  }
+
+  filterBy(department): void {
+    const devsAndQAWithDaysOffMap = getTimeOff('2021-09-08', 20)
+
+    if (department === 'Development') {
+      this.setMembersWithTimeOff(this.allDevsAndQA.filter(isDev), devsAndQAWithDaysOffMap)
+    } else if (department === 'QA') {
+      this.setMembersWithTimeOff(this.allDevsAndQA.filter(isQA), devsAndQAWithDaysOffMap)
+    } else {
+      this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)
+    }
   }
 }

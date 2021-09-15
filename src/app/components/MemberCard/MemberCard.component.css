@@ -1,15 +1,15 @@
 .member-card-container {
-    background-color: #FFFFFF95; 
-    border-radius: 60px; 
-    margin: 0 0 20px 0; 
-    padding: 4px 30px 4px 4px; 
+    background-color: #FFFFFF95;
+    border-radius: 60px;
+    margin: 0 0 20px 0;
+    padding: 4px 30px 4px 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
 }
 .delete-icon {
-    width: 15.5px; 
+    width: 15.5px;
     height: 18.8px;
 }
 .labels-container {
