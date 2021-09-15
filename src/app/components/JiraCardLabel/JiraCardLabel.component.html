@@ -5,12 +5,13 @@
     contentType="template"
     class="label-container"
 >
-    <a class="label" href="https://wazoku.atlassian.net/browse/IS-11171">{{ cardNumber }}</a>
+    <a class="label" href="https://wazoku.atlassian.net/browse/IS-11171" target="blank">{{ cardNumber }}</a>
     <button (click)="removeCard()">
         <p class="remove-icon">x</p>
     </button>
 </div>
 
 <ng-template #popover>
+    <p>Title: Refactor serial number generation</p>
     <p>Estimate: 3 days</p>
 </ng-template>
