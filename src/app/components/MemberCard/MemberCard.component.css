@@ -18,8 +18,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    width: 350px;
 }
 .not-available {
     background-color: #E8E8E8;
+}
+
+.member-card-jira {
+    width: 450px;
+    display: flex;
+    align-items: center;
 }

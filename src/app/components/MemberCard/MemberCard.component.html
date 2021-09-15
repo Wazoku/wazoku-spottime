@@ -20,16 +20,18 @@
         [counterNumber]="estimatedFor" 
         [counterLabel]="'Assigned Days'"
     ></number-counter>
-    <jira-card-input 
-        [memberAvailable]="isMemberAvailable"
-        (jiraCardAdded)="addJiraCard($event)"
-    ></jira-card-input>
-    <div *ngIf="isMemberAvailable" class="labels-container">
-        <div *ngFor="let label of jiraCards">
-            <jira-card-label 
-                [cardNumber]="label"
-                (cardRemoved)="removeJiraCard(label)"
-            ></jira-card-label>
+    <div class="member-card-jira">
+        <jira-card-input 
+            [memberAvailable]="isMemberAvailable"
+            (jiraCardAdded)="addJiraCard($event)"
+        ></jira-card-input>
+        <div *ngIf="isMemberAvailable" class="labels-container">
+            <div *ngFor="let label of jiraCards">
+                <jira-card-label 
+                    [cardNumber]="label"
+                    (cardRemoved)="removeJiraCard(label)"
+                ></jira-card-label>
+            </div>
         </div>
     </div>
     <button class="delete-button" 
