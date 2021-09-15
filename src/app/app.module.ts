@@ -10,7 +10,10 @@ import { NumberCounterComponent } from './components/NumberCounter/NumberCounter
 import { JiraCardInputComponent } from './components/JiraCardInput/JiraCardInput.component';
 import { JiraCardLabelComponent } from './components/JiraCardLabel/JiraCardLabel.component';
 import { SprintStartDateComponent } from './components/SprintStartDate/SprintStartDate.component';
-import { TooltipModule } from 'ng2-tooltip-directive'
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 @NgModule({
   declarations: [
@@ -25,8 +28,13 @@ import { TooltipModule } from 'ng2-tooltip-directive'
   ],
   imports: [
     BrowserModule,
+BrowserAnimationsModule,
     HttpClientModule,
     TooltipModule,
+    ToastrModule.forRoot(),
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger', // set defaults here
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

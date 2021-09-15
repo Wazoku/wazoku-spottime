@@ -16,7 +16,19 @@ export const isDevOrQA = member => {
     const { work: {department, title} } = member
 
     return (
-        (department == 'Development' && !title.includes('Director'))
+        (department === 'Development' && !title.includes('Director'))
         || title.includes('QA')
     )
+}
+
+export const isDev = member => {
+  const { work: {department, title} } = member
+
+  return department === 'Development' && !title.includes('Director')
+}
+
+export const isQA = member => {
+  const { work: {department, title} } = member
+
+  return title.includes('QA')
 }

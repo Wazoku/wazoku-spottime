@@ -1,13 +1,9 @@
 
 <div *ngIf="memberAvailable; else elseBlock">
     <div class="input-container">
-        <input #newJiraCard 
-            type="text" 
-            class="jira-input" 
-            placeholder="Jira card no…"
-        />
-        <button class="add-button" 
-            (click)="addJiraCard()">
+        <input #newJiraCard type="text" maxlength="9" (keydown)="addJiraCardByEnter($event)" class="jira-input"
+            placeholder="Jira card no…" />
+        <button class="add-button" (click)="addJiraCard()">
             <p class="add-icon">+</p>
         </button>
     </div>
