@@ -5,6 +5,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { constants } from 'src/app/constants';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sprint-start-date',
@@ -13,6 +14,8 @@ import { constants } from 'src/app/constants';
 })
 
 export class SprintStartDateComponent {
+  constructor(private toastr: ToastrService) { }
+
   title = 'sprint-start-date'
 
   sprintDays: number
@@ -25,6 +28,8 @@ export class SprintStartDateComponent {
   }
 
   applyStartDate(): void {
+    if (!this.sprintStartDate.nativeElement.value || this.sprintDays < 1) this.toastr.error("Please select valid date OR valid days before proceeding.");
+
     this.dateApplied.emit({
       sprintStartDate: this.sprintStartDate.nativeElement.value,
       sprintDays: this.sprintDays,

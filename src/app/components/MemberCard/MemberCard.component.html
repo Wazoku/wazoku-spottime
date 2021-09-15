@@ -32,11 +32,12 @@
             ></jira-card-label>
         </div>
     </div>
-    <button class="delete-button" 
-        (click)="removeMember()">
-        <img src="../../../assets/delete.png" 
-            class="delete-icon" 
-        />
+    <button class="delete-button" [hidden]="jiraCards.length < 1" (click)="removeMember()">
+        <img src="../../../assets/delete.png" class="delete-icon" />
+    </button>
+    <button class="delete-button" [hidden]="jiraCards.length > 0" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+        [popoverMessage]="popoverMessage" placement="right" (confirm)="removeMember()" (cancel)="false">
+        <img src="../../../assets/delete.png" class="delete-icon" />
     </button>
     <input type="checkbox"
         id="on_ps"

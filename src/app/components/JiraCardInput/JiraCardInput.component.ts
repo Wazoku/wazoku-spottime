@@ -23,4 +23,9 @@ export class JiraCardInputComponent {
     this.jiraCardAdded.emit(this.newJiraCard.nativeElement.value)
     this.newJiraCard.nativeElement.value = ''
   }
+  addJiraCardByEnter(event: any): void {
+    console.log(event.keyCode);
+    if (event?.keyCode === 13 || event?.keyCode === 'ENTER') this.addJiraCard()
+
+  }
 }
