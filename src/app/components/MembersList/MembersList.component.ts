@@ -21,7 +21,7 @@ export class MembersListComponent implements OnChanges {
   membersWithTimeOff: Member[]
   departments: string[]
 
-  developersShown: boolean = true
+  developersShown: boolean = false
   qasShown: boolean = false
 
   constructor(
