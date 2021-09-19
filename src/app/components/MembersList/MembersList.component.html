@@ -18,37 +18,30 @@
       </div>
     </div>
 
-    <div *ngFor="let member of membersWithTimeOff">
-      <member-card
-        [member]="member"
-        (memberRemoved)="memberRemoved($event)"
-      ></member-card>
-    </div>
+   <button (click)="developersShown = !developersShown">
+       <p style="font-weight: bold; font-size: 18px;">Developers</p>
+   </button>
+   <div *ngIf="developersShown">
+       <div *ngFor="let member of developersList">
+           <member-card
+               [member]="member"
+               (memberRemoved)="memberRemoved($event)"
+           ></member-card>
+       </div>
+   </div>
 
-<!--    <button (click)="developersShown = !developersShown">-->
-<!--        <p style="font-weight: bold; font-size: 18px;">Developers</p>-->
-<!--    </button>-->
-<!--    <div *ngIf="developersShown">-->
-<!--        <div *ngFor="let member of developersList">-->
-<!--            <member-card-->
-<!--                [member]="member"-->
-<!--                (memberRemoved)="memberRemoved($event)"-->
-<!--            ></member-card>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div style="height: 5px; background-color: grey;"></div>-->
-<!--    <button (click)="qasShown = !qasShown">-->
-<!--        <p style="font-weight: bold; font-size: 18px;">QAs</p>-->
-<!--    </button>-->
-<!--    <div *ngIf="qasShown">-->
-<!--        <div *ngFor="let member of qasList">-->
-<!--            <member-card-->
-<!--                [member]="member"-->
-<!--                (memberRemoved)="memberRemoved($event)"-->
-<!--            ></member-card>-->
-<!--        </div>-->
-<!--    </div>-->
+   <div style="height: 5px; background-color: grey;"></div>
+   <button (click)="qasShown = !qasShown">
+       <p style="font-weight: bold; font-size: 18px;">QAs</p>
+   </button>
+   <div *ngIf="qasShown">
+       <div *ngFor="let member of qasList">
+           <member-card
+               [member]="member"
+               (memberRemoved)="memberRemoved($event)"
+           ></member-card>
+       </div>
+   </div>
 </div>
 <!-- <ng-template #elseBlock>
     <p class="empty-list-placeholder">Enter a Start date for the sprint to start.</p>

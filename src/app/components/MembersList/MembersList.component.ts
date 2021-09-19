@@ -1,8 +1,8 @@
 import { Component, Inject, Input, OnChanges } from '@angular/core';
 import { Member } from 'src/app/models/member';
 import { constants } from '../../constants';
-import { filterDevsAndQA, getMembers, MembersService } from '../../services/members.service';
-import { getMembersIdsAndDaysOffMap, getSprintEndDate, getTimeOff, TimeOffService } from '../../services/timeoff.service';
+import { MembersService } from '../../services/members.service';
+import { TimeOffService } from '../../services/timeoff.service';
 import {isDev, isQA} from '../../utils';
 
 @Component({
@@ -18,11 +18,11 @@ export class MembersListComponent implements OnChanges {
   @Input() sprintDays: number
 
   allDevsAndQA: []
-  membersWithTimeOff: Member[]
+  membersWithTimeOff: Member[] = []
   departments: string[]
 
-  developersShown: boolean = false
-  qasShown: boolean = false
+  developersShown: boolean = true
+  qasShown: boolean = true
 
   constructor(
     @Inject(MembersService) public membersService: MembersService,
@@ -31,17 +31,18 @@ export class MembersListComponent implements OnChanges {
 
   ngOnInit(): void {
     // the next line should be removed, just for mocking
-    this.allDevsAndQA = getMembers()
+    this.allDevsAndQA = this.membersService.getMembersMock()
     this.departments = ['All', 'Development', 'QA']
 
     // the next 2 lines should be removed as well
-    const devsAndQAWithDaysOffMap = getTimeOff('2021-09-08', 20)
+    const devsAndQAWithDaysOffMap = this.timeoffService.getTimeOffMock('2021-09-08', 20)
 
     this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)
 
     this.membersService.getMembers().subscribe(
       (members) => {
-        this.allDevsAndQA = filterDevsAndQA(members.employees)
+        console.log('--> ', members)
+        this.allDevsAndQA = this.membersService.filterDevsAndQA(members.employees)
       },
       error => {
         console.log(error)
@@ -56,26 +57,26 @@ export class MembersListComponent implements OnChanges {
     if ((changes.sprintStartDate && this.sprintStartDate)
       || (changes.sprintDays && this.sprintDays)) {
         // the next 2 lines should be removed
-      const devsAndQAWithDaysOffMap = getTimeOff(this.sprintStartDate, this.sprintDays)
+      const devsAndQAWithDaysOffMap = this.timeoffService.getTimeOffMock(this.sprintStartDate, this.sprintDays)
 
       this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)
 
 
-      const sprintEndDate = getSprintEndDate(this.sprintStartDate, this.sprintDays)
+      const sprintEndDate = this.timeoffService.getSprintEndDate(this.sprintStartDate, this.sprintDays)
 
-      this.timeoffService.getTimeOff(this.sprintStartDate, sprintEndDate).subscribe(
-        (timeoff) => {
-          const devsAndQAWithDaysOffMap = getMembersIdsAndDaysOffMap(timeoff)
+      // this.timeoffService.getTimeOff(this.sprintStartDate, sprintEndDate).subscribe(
+      //   (timeoff) => {
+      //     const devsAndQAWithDaysOffMap = this.timeoffService.getMembersIdsAndDaysOffMap(timeoff)
 
-          this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)
-        },
-        error => {
-          console.log(error)
-        },
-        () => {
+      //     this.setMembersWithTimeOff(this.allDevsAndQA, devsAndQAWithDaysOffMap)
+      //   },
+      //   error => {
+      //     console.log(error)
+      //   },
+      //   () => {
 
-        }
-      )
+      //   }
+      // )
     }
   }
 
@@ -106,7 +107,7 @@ export class MembersListComponent implements OnChanges {
   }
 
   filterBy(department): void {
-    const devsAndQAWithDaysOffMap = getTimeOff('2021-09-08', 20)
+    const devsAndQAWithDaysOffMap = this.timeoffService.getTimeOffMock('2021-09-08', 20)
 
     if (department === 'Development') {
       this.setMembersWithTimeOff(this.allDevsAndQA.filter(isDev), devsAndQAWithDaysOffMap)
